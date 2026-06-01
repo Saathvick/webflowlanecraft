@@ -124,6 +124,17 @@
     }
     @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
+    /* Hero content tilt transition */
+    .hero-content { transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+    /* Section heading animated underline */
+    .section-title.dark { position: relative; padding-bottom: 4px; }
+    .section-title.dark::after {
+      content: ''; display: block; position: absolute; bottom: 0; left: 0;
+      height: 2px; width: 0;
+      background: linear-gradient(to right, var(--gold), transparent);
+      transition: width 1.3s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .section-title.dark.underline-visible::after { width: 72px; }
 
     /* FEATURED PRESS */
     #featured-press { background: var(--navy); padding: 80px 48px 56px; }
@@ -164,6 +175,18 @@
     .press-logo img[alt="TheGIST"] { height: 72px; max-width: 220px; }
     .press-logo img[alt="BW BusinessWorld"] { height: 40px; max-width: 200px; }
     .press-logo img[alt="Golf Digest"] { height: 40px; }
+
+    /* BRAND BREAK */
+    #brand-break {
+      background: var(--white); padding: 64px 48px;
+      display: flex; justify-content: center; align-items: center;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .brand-break-logo {
+      width: 480px; max-width: 90%; height: auto;
+      display: block; margin: 0 auto;
+    }
 
     /* SERVICES */
     #services { background: var(--white); }
@@ -383,6 +406,8 @@
       .services-intro-grid, .contact-inner { grid-template-columns: 1fr; }
       .services-grid, .featured-grid, .t-grid, .team-grid, .advisory-grid { grid-template-columns: 1fr; }
       .services-grid { gap: 16px; }
+      #brand-break { padding: 48px 24px; }
+      .brand-break-logo { width: 85%; max-width: 380px; }
       .svc-card { height: auto; border-radius: 12px; }
       .svc-bg { border-radius: 12px; }
       .svc-overlay { border-radius: 12px; }
@@ -534,6 +559,11 @@
   </div>
 </section>
 
+<!-- BRAND LOGO BREAK -->
+<section id="brand-break">
+  <img src="logocraft.jpeg" alt="Lanecraft Lab" class="brand-break-logo" />
+</section>
+
 <!-- SERVICES -->
 <section id="services">
   <div class="services-intro">
@@ -597,7 +627,7 @@
       </div>
     </div>
     <div class="svc-card reveal">
-      <div class="svc-bg" style="background-image:url('assets/service-sustainability.jpeg')"></div>
+      <div class="svc-bg" style="background-image:url('fix6thcard.png')"></div>
       <div class="svc-overlay"></div>
       <div class="svc-content">
         <p class="svc-num">06</p>
@@ -960,6 +990,29 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Mouse parallax tilt on hero content ─────────────────────────
+  (function() {
+    const hero = document.getElementById('hero');
+    const content = hero.querySelector('.hero-content');
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  - 0.5) * 14;
+      const y = ((e.clientY - r.top)  / r.height - 0.5) * 9;
+      content.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    hero.addEventListener('mouseleave', () => { content.style.transform = ''; });
+  })();
+
+  // ── Section heading underline reveal ────────────────────────────
+  (function() {
+    const titleObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('underline-visible'); titleObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.section-title.dark').forEach(el => titleObs.observe(el));
+  })();
 
   // Contact form feedback
   function handleSubmit(e) {
