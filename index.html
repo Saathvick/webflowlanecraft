@@ -376,7 +376,7 @@
     /* FOOTER */
     footer { background: #05101f; padding: 44px 48px; }
     .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .footer-logo { font-family: 'Newsreader', serif; font-size: 18px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+    .footer-logo { height: 48px; width: auto; display: block; opacity: 0.85; }
     .footer-nav { display: flex; gap: 28px; list-style: none; }
     .footer-nav a { font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
     .footer-nav a:hover { color: var(--gold); }
@@ -969,7 +969,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <span class="footer-logo">Lanecraft Lab</span>
+    <img src="finallogo.png" alt="Lanecraft Lab" class="footer-logo" />
     <ul class="footer-nav">
       <li><a href="#services">Services</a></li>
       <li><a href="#clients">Clients</a></li>
@@ -981,6 +981,8 @@
 </footer>
 
 <script>
+  history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
   // Sticky nav shadow
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
