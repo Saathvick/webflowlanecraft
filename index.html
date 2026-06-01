@@ -440,9 +440,32 @@
       .press-logo img[alt="TheGIST"] { height: 72px; max-width: 200px; }
       .marquee-track { gap: 28px; }
     }
+    /* LOADER */
+    #page-loader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--navy);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+      transition: opacity 0.55s ease, visibility 0.55s ease;
+    }
+    #page-loader.hidden { opacity: 0; visibility: hidden; }
+    .loader-logo { height: 72px; width: auto; }
+    .loader-bar {
+      width: 160px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
+    }
+    .loader-bar-fill {
+      height: 100%; width: 0; background: var(--gold);
+      animation: loaderFill 1.2s ease forwards;
+    }
+    @keyframes loaderFill { to { width: 100%; } }
   </style>
 </head>
 <body>
+
+<!-- LOADER -->
+<div id="page-loader">
+  <img src="finallogo.png" alt="Lanecraft Lab" class="loader-logo" />
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
 
 <!-- NAV -->
 <nav id="main-nav">
@@ -983,6 +1006,9 @@
 <script>
   history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('page-loader').classList.add('hidden'), 400);
+  });
   // Sticky nav shadow
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
