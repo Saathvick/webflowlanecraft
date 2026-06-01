@@ -918,8 +918,6 @@
     </div>
     <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
       <p class="form-header">Please Complete the Form Below</p>
-      <input type="hidden" name="_subject" value="New Inquiry — Lanecraft Lab" />
-      <input type="hidden" name="_captcha" value="false" />
 
       <div class="form-group">
         <p class="form-group-label">Name</p>
@@ -1036,7 +1034,7 @@
     btn.textContent = 'Sending…';
     btn.disabled = true;
 
-    fetch('https://formsubmit.co/ajax/neurodepthx@gmail.com', {
+    fetch('https://formspree.io/f/xgoqjzeo', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(data)
